@@ -50,29 +50,37 @@ async function translateText() {
 
 translateBtn.addEventListener('click', translateText);
 
-playAudioBtn.addEventListener('click', () => {
+playAudioBtn.addEventListener('click', async () => {
   const textToSpeak = translatedTextEl.textContent.trim();
   if (!textToSpeak || textToSpeak === '—') {
     setStatus('Translate something to hear it.');
     return;
   }
 
-  const langCode = languageSelect.value;
-  // Using Google Translate's unofficial TTS API for broader language support
-  const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=${encodeURIComponent(textToSpeak)}&tl=${langCode}`);
-  
   playAudioBtn.disabled = true;
-  setStatus('Playing audio…');
+  setStatus('Fetching audio…');
 
-  audio.addEventListener('ended', () => {
-    setStatus('Audio playback complete.');
-    playAudioBtn.disabled = false;
-  });
-  audio.addEventListener('error', () => {
+  try {
+    const langCode = languageSelect.value;
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=${encodeURIComponent(textToSpeak)}&tl=${langCode}`;
+    
+    // Fetch the audio data as a blob to bypass CORS playback issues
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Failed to fetch audio from Google TTS.');
+
+    const blob = await response.blob();
+    const audioUrl = URL.createObjectURL(blob);
+    const audio = new Audio(audioUrl);
+
+    setStatus('Playing audio…');
+    audio.play();
+    audio.addEventListener('ended', () => setStatus('Audio playback complete.'));
+  } catch (error) {
+    console.error('Audio playback error:', error);
     setStatus('Could not play audio. Please try again.');
+  } finally {
     playAudioBtn.disabled = false;
-  });
-  audio.play();
+  }
 });
 
 if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
@@ -125,4 +133,3 @@ imageInput.addEventListener('change', async (event) => {
     event.target.value = '';
   }
 });
-
