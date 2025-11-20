@@ -1,0 +1,71 @@
+:root {
+  --accent:#00bcd4; /* Cyan */
+  --accent-dark:#0097a7;
+  --glass-bg:rgba(17, 17, 17, 0.8);
+  --vibrant-bg: linear-gradient(135deg, #28313B 0%, #485461 50%, #566573 100%);
+}
+body{
+  font-family:'Space Grotesk', system-ui;
+  /* min-height:100vh; */
+  margin:0;
+  background-size: cover;
+  background-image: url("https://t3.ftcdn.net/jpg/00/70/13/68/360_F_70136808_ALZpHw1fgKYHI2CIA5ELCqeTgPmaGfcG.jpg");
+  /* color:#f5f5f5; */
+  /* Add padding to prevent content from being hidden by the fixed navbar */
+  padding-top: 90px; 
+}
+.hero-title{
+  letter-spacing:.2em;
+  font-weight:700;
+  color:var(--accent);
+}
+.glass-card{
+  background:var(--glass-bg);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:24px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  backdrop-filter:blur(20px);
+}
+textarea.form-control{
+  min-height:170px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.1);
+  color:#f5f5f5;
+}
+textarea.form-control:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 .2rem rgba(248,197,55,0.15);
+}
+.btn-pill{
+  border-radius:999px;
+  font-weight:600;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+.btn-outline-accent{
+  color:var(--accent);
+  border-color:var(--accent);
+}
+.btn-outline-accent:hover{
+  background:rgba(248,197,55,0.12);
+  color:var(--accent);
+  border-color:var(--accent);
+}
+.btn-accent{
+  background:var(--accent);
+  border:none;
+  color:#111;
+  box-shadow:0 12px 40px rgba(248,197,55,0.35);
+}
+.btn-accent:hover{background:var(--accent-dark); color:#ffffff;}
+#translatedText{
+  font-size:1.7rem;
+  min-height:56px;
+  color: white;
+  
+}
+.status-text{
+  font-size:.95rem;
+  color:#ffffff;
+}
+
